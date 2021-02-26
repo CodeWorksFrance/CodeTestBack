@@ -11,6 +11,7 @@ steps:
       [
           "run",
           "deploy",
+          "code-test-service",
           "--image",
           "gcr.io/$PROJECT_ID/${SHORT_SHA}",
           "--region",

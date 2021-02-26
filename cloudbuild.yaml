@@ -11,7 +11,7 @@ steps:
       [
           "run",
           "deploy",
-          "${_SERVICE_NAME}",
+          "codetestback-pipeline-service",
           "--image",
           "gcr.io/$PROJECT_ID/codetestback-pipeline-service:${SHORT_SHA}",
           "--region",

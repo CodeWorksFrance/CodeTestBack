@@ -11,7 +11,6 @@ steps:
       [
           "run",
           "deploy",
-          "${_SERVICE_NAME}",
           "--image",
           "gcr.io/$PROJECT_ID/${SHORT_SHA}",
           "--region",

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
 
 from scr.Dto import Base
 
@@ -10,3 +11,5 @@ class CandidateAnswerDto(Base):
     state = Column(String)
     score = Column(Float)
     evaluation_id = Column(String, ForeignKey('evaluation.id'))
+    question_id = Column(String, ForeignKey('question.id'))
+    question = relationship("QuestionDto")

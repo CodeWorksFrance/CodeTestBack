@@ -11,4 +11,4 @@ class CandidateAnswerHelper:
 
     @staticmethod
     def map_candidate_answers(candidate_answers: [CandidateAnswerDto]):
-        return [CandidateAnswer(c.id, c.state, c.score) for c in candidate_answers]
+        return [CandidateAnswer(c.id, c.state, c.score, c.question) for c in candidate_answers]

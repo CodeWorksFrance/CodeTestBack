@@ -12,3 +12,7 @@ class QuestionHelper:
     @staticmethod
     def map_questions(questions: [QuestionDto]):
         return [Question(q.id, q.label, q.answer, q.difficulty) for q in questions]
+
+    @staticmethod
+    def map_question(question: QuestionDto):
+        return Question(question.id, question.label, question.answer, question.difficulty)

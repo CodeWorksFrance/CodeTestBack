@@ -1,7 +1,7 @@
 import typing
 
-from Models.Workshop import Workshop
-from Service.WorkshopService import WorkshopService
+from scr.Models.Workshop import Workshop
+from scr.Service.WorkshopService import WorkshopService
 
 
 class WorkshopHelper:

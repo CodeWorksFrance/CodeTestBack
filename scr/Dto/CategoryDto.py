@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-from Dto import Base
+from scr.Dto import Base
 
 
 class CategoryDto(Base):

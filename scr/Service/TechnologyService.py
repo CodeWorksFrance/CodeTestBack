@@ -1,4 +1,4 @@
-from Dto.TechnologyDto import TechnologyDto
+from scr.Dto.TechnologyDto import TechnologyDto
 from postgres import Postgres
 
 

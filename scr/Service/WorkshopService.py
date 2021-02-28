@@ -1,4 +1,4 @@
-from Dto.WorkshopDto import WorkshopDto
+from scr.Dto.WorkshopDto import WorkshopDto
 from postgres import Postgres
 
 

@@ -1,4 +1,4 @@
-from Dto.QuestionDto import QuestionDto
+from scr.Dto.QuestionDto import QuestionDto
 from postgres import Postgres
 
 

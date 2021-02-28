@@ -1,14 +1,14 @@
 import strawberry
 import typing
 
-from Helper.CategoryHelper import CategoryHelper
-from Helper.QuestionHelper import QuestionHelper
-from Helper.TechnologyHelper import TechnologyHelper
-from Helper.WorkshopHelper import WorkshopHelper
-from Models.Category import Category
-from Models.Technology import Technology
-from Models.Question import Question
-from Models.Workshop import Workshop
+from scr.Helper.CategoryHelper import CategoryHelper
+from scr.Helper.QuestionHelper import QuestionHelper
+from scr.Helper.TechnologyHelper import TechnologyHelper
+from scr.Helper.WorkshopHelper import WorkshopHelper
+from scr.Models.Category import Category
+from scr.Models.Technology import Technology
+from scr.Models.Question import Question
+from scr.Models.Workshop import Workshop
 
 
 @strawberry.type

@@ -1,9 +1,9 @@
 import typing
 
-from Dto.TechnologyDto import TechnologyDto
-from Helper.QuestionHelper import QuestionHelper
-from Models.Technology import Technology
-from Service.TechnologyService import TechnologyService
+from scr.Dto import TechnologyDto
+from scr.Helper.QuestionHelper import QuestionHelper
+from scr.Models.Technology import Technology
+from scr.Service.TechnologyService import TechnologyService
 
 
 class TechnologyHelper:

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Float
 
-from Dto import Base
+from scr.Dto import Base
 
 
 class WorkshopDto(Base):

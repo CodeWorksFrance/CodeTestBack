@@ -1,4 +1,4 @@
-from Dto.CategoryDto import CategoryDto
+from scr.Dto.CategoryDto import CategoryDto
 from postgres import Postgres
 
 

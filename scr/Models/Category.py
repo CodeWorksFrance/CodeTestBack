@@ -1,7 +1,7 @@
 import strawberry
 import typing
 
-from Models.Technology import Technology
+from scr.Models.Technology import Technology
 
 
 @strawberry.type

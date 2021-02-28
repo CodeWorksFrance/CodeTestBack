@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey
 
-from Dto import Base
+from scr.Dto import Base
 
 
 class QuestionDto(Base):

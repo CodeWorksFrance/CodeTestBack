@@ -1,8 +1,8 @@
 import typing
 
-from Helper.TechnologyHelper import TechnologyHelper
-from Models.Category import Category
-from Service.CategoryService import CategoryService
+from scr.Helper.TechnologyHelper import TechnologyHelper
+from scr.Models.Category import Category
+from scr.Service.CategoryService import CategoryService
 
 
 class CategoryHelper:

@@ -15,7 +15,7 @@ from scr.Models.Workshop import Workshop
 class Query:
     @strawberry.field
     def category(self) -> typing.List['Category']:
-        return CategoryHelper.retrieve_category()
+        return CategoryHelper().retrieve_category()
 
     @strawberry.field
     def technology(self) -> typing.List['Technology']:
@@ -27,7 +27,7 @@ class Query:
 
     @strawberry.field
     def workshop(self, index: str = None) -> typing.List['Workshop']:
-        return WorkshopHelper.retrieve_workshop(index=index)
+        return WorkshopHelper().retrieve_workshop(index=index)
 
 
 @strawberry.type

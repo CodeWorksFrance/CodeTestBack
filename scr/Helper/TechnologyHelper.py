@@ -13,3 +13,8 @@ class TechnologyHelper:
     @staticmethod
     def map_technologies(technologies: [TechnologyDto]):
         return [Technology(t.id, t.label, t.type, QuestionHelper.map_questions(t.question)) for t in technologies]
+
+    @staticmethod
+    def map_technology(technologies: TechnologyDto):
+        return Technology(technologies.id, technologies.label, technologies.type,
+                          QuestionHelper.map_questions(technologies.question))

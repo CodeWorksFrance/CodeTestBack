@@ -2,6 +2,7 @@ import typing
 
 from scr.Dto.EvaluationDto import EvaluationDto
 from scr.Helper.CandidateAnswerHelper import CandidateAnswerHelper
+from scr.Helper.TechnologyHelper import TechnologyHelper
 from scr.Models.Evaluation import Evaluation
 from scr.Service.EvaluationService import EvaluationService
 
@@ -12,5 +13,5 @@ class EvaluationHelper:
 
     @staticmethod
     def map_evaluations(evaluations: [EvaluationDto]):
-        return [Evaluation(e.id, e.state, e.score, CandidateAnswerHelper.map_candidate_answers(e.candidate_answer))
-                for e in evaluations]
+        return [Evaluation(e.id, e.state, e.score, CandidateAnswerHelper.map_candidate_answers(e.candidate_answer),
+                           TechnologyHelper.map_technology(e.technology)) for e in evaluations]

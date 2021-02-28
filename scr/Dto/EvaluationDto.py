@@ -12,3 +12,5 @@ class EvaluationDto(Base):
     score = Column(Float)
     workshop_id = Column(String, ForeignKey('workshop.id'))
     candidate_answer = relationship("CandidateAnswerDto")
+    technology_id = Column(String, ForeignKey('technology.id'))
+    technology = relationship("TechnologyDto")

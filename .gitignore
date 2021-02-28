@@ -1,2 +1,5 @@
 .idea/
 CodeTestBack.iml
+database.ini
+
+**/__pycache__/**

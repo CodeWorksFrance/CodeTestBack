@@ -1,5 +1,5 @@
-from scr.Dto.QuestionDto import QuestionDto
 from postgres import Postgres
+from scr.Dto.QuestionDto import QuestionDto
 
 
 class QuestionService:

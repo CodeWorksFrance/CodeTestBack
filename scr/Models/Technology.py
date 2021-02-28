@@ -1,5 +1,6 @@
-import strawberry
 import typing
+
+import strawberry
 
 from scr.Models.Question import Question
 

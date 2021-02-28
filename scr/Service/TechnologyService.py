@@ -1,5 +1,5 @@
-from scr.Dto.TechnologyDto import TechnologyDto
 from postgres import Postgres
+from scr.Dto.TechnologyDto import TechnologyDto
 
 
 class TechnologyService:

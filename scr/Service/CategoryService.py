@@ -1,5 +1,5 @@
-from scr.Dto.CategoryDto import CategoryDto
 from postgres import Postgres
+from scr.Dto.CategoryDto import CategoryDto
 
 
 class CategoryService:

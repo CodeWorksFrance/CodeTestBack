@@ -1,5 +1,5 @@
-from scr.Dto.CandidateAnswerDto import CandidateAnswerDto
 from postgres import Postgres
+from scr.Dto.CandidateAnswerDto import CandidateAnswerDto
 
 
 class CandidateAnswerService:

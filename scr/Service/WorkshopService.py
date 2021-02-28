@@ -1,5 +1,5 @@
-from scr.Dto.WorkshopDto import WorkshopDto
 from postgres import Postgres
+from scr.Dto.WorkshopDto import WorkshopDto
 
 
 class WorkshopService:

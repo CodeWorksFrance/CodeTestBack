@@ -3,3 +3,5 @@ CodeTestBack.iml
 database.ini
 
 **/__pycache__/**
+
+init_db_vars.sh

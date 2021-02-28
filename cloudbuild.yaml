@@ -1,45 +1,40 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-    [ 'build', '-t', 'gcr.io/$PROJECT_ID/code-test-back-service:$SHORT_SHA', '.' ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'push', 'gcr.io/$PROJECT_ID/code-test-back-service' ]
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    [
-        'run',
-        'deploy',
-        'code-test-back-service',
-        '--image',
-        'gcr.io/$PROJECT_ID/code-test-back-service:$SHORT_SHA',
-        '--port',
-        '8000',
-        '--region',
-        'europe-west1',
-        '--platform',
-        'managed',
-        '--allow-unauthenticated',
-    ]
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    [
-        'run',
-        'services',
-        'update',
-        'code-test-back-service',
-        '--region',
-        'europe-west1',
-        '--platform',
-        'managed',
-        '--add-cloudsql-instances',
-        '$_CLOUD_POSTGRES_DB_INSTANCE_NAME',
-        '--set-env-vars',
-        'CLOUD_SQL_CONNECTION_NAME=$_CLOUD_POSTGRES_DB_INSTANCE_NAME,DB_USER=$_CLOUD_POSTGRES_DB_USER,DB_PASS=$_CLOUD_POSTGRES_DB_PASS,DB_NAME=$_CLOUD_POSTGRES_DB_NAME'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [ 'build', '-t', 'gcr.io/$PROJECT_ID/$_CLOUD_RUN_SERVICE_NAME:$SHORT_SHA', '.' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'gcr.io/$PROJECT_ID/$_CLOUD_RUN_SERVICE_NAME' ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+          'run',
+          'deploy',
+          '$_CLOUD_RUN_SERVICE_NAME',
+          '--image',
+          'gcr.io/$PROJECT_ID/$_CLOUD_RUN_SERVICE_NAME:$SHORT_SHA',
+          '--port',
+          '8000',
+          '--region',
+          'europe-west1',
+          '--platform',
+          'managed',
+          '--allow-unauthenticated',
       ]
-substitutions:
-  _CLOUD_POSTGRES_DB_INSTANCE_NAME: codetestbdd:europe-west1:codetest-bdd-1
-  _CLOUD_POSTGRES_DB_USER: postgres
-  _CLOUD_POSTGRES_DB_PASS: CodeWorks
-  _CLOUD_POSTGRES_DB_NAME: postgres
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+          'run',
+          'services',
+          'update',
+          '$_CLOUD_RUN_SERVICE_NAME',
+          '--region',
+          'europe-west1',
+          '--platform',
+          'managed',
+          '--add-cloudsql-instances',
+          '$_CLOUD_POSTGRES_DB_INSTANCE_NAME',
+          '--set-env-vars',
+          'CLOUD_SQL_CONNECTION_NAME=$_CLOUD_POSTGRES_DB_INSTANCE_NAME,DB_USER=$_CLOUD_POSTGRES_DB_USER,DB_PASS=$_CLOUD_POSTGRES_DB_PASS,DB_NAME=$_CLOUD_POSTGRES_DB_NAME'
+      ]
 images:
-- 'gcr.io/$PROJECT_ID/code-test-back-service:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/$_CLOUD_RUN_SERVICE_NAME:$SHORT_SHA'

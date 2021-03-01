@@ -33,9 +33,10 @@ class Query:
 
 @strawberry.type
 class Mutation:
-    @strawberry.mutation
-    def category(self, label: str) -> Category:
-        return Category.save_category(label)
+    pass
+    # @strawberry.mutation
+    # def category(self, label: str) -> Category:
+    #     return Category.save_category(label)
 
 
-schema = strawberry.Schema(query=Query, mutation=Mutation)
+schema = strawberry.Schema(query=Query)

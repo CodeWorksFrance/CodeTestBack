@@ -1,11 +1,11 @@
-from postgres import Postgres
+from db_config import DBConfig
 from scr.Dto.WorkshopDto import WorkshopDto
 
 
 class WorkshopService:
     @staticmethod
     def get_workshops(index: str) -> [WorkshopDto]:
-        session = Postgres.init_session()
+        session = DBConfig().init_session()
         if index is None:
             return session.query(WorkshopDto)
 

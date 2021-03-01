@@ -1,9 +1,9 @@
-from postgres import Postgres
+from db_config import DBConfig
 from scr.Dto.CandidateAnswerDto import CandidateAnswerDto
 
 
 class CandidateAnswerService:
     @staticmethod
     def get_candidate_answers() -> [CandidateAnswerDto]:
-        session = Postgres.init_session()
+        session = DBConfig().init_session()
         return session.query(CandidateAnswerDto)

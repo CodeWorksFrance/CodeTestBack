@@ -1,6 +1,7 @@
 import os
 
 import sqlalchemy
+from sqlalchemy.orm import sessionmaker
 
 
 class DBConfig:
@@ -113,3 +114,7 @@ class DBConfig:
         # [END cloud_sql_postgres_sqlalchemy_create_socket]
         pool.dialect.description_encoding = None
         return pool
+
+    def init_session(self):
+        session = sessionmaker(self.load)
+        return session()

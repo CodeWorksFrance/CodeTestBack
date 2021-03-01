@@ -1,5 +1,5 @@
 from db_config import DBConfig
-from scr.Dto.CategoryDto import CategoryDto
+from src.Dto.CategoryDto import CategoryDto
 
 
 class CategoryService:

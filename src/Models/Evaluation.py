@@ -2,8 +2,8 @@ import typing
 
 import strawberry
 
-from scr.Models.CandidateAnswer import CandidateAnswer
-from scr.Models.Technology import Technology
+from src.Models.CandidateAnswer import CandidateAnswer
+from src.Models.Technology import Technology
 
 
 @strawberry.type

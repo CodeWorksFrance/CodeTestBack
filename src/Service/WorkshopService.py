@@ -1,5 +1,5 @@
 from db_config import DBConfig
-from scr.Dto.WorkshopDto import WorkshopDto
+from src.Dto.WorkshopDto import WorkshopDto
 
 
 class WorkshopService:

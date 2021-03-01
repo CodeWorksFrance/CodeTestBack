@@ -1,9 +1,9 @@
 import typing
 
-from scr.Dto.CategoryDto import CategoryDto
-from scr.Helper.TechnologyHelper import TechnologyHelper
-from scr.Models.Category import Category
-from scr.Service.CategoryService import CategoryService
+from src.Dto.CategoryDto import CategoryDto
+from src.Helper.TechnologyHelper import TechnologyHelper
+from src.Models.Category import Category
+from src.Service.CategoryService import CategoryService
 
 
 class CategoryHelper:

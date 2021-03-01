@@ -1,5 +1,5 @@
 from db_config import DBConfig
-from scr.Dto.TechnologyDto import TechnologyDto
+from src.Dto.TechnologyDto import TechnologyDto
 
 
 class TechnologyService:

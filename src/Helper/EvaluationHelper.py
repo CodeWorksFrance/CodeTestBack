@@ -1,10 +1,10 @@
 import typing
 
-from scr.Dto.EvaluationDto import EvaluationDto
-from scr.Helper.CandidateAnswerHelper import CandidateAnswerHelper
-from scr.Helper.TechnologyHelper import TechnologyHelper
-from scr.Models.Evaluation import Evaluation
-from scr.Service.EvaluationService import EvaluationService
+from src.Dto.EvaluationDto import EvaluationDto
+from src.Helper.CandidateAnswerHelper import CandidateAnswerHelper
+from src.Helper.TechnologyHelper import TechnologyHelper
+from src.Models.Evaluation import Evaluation
+from src.Service.EvaluationService import EvaluationService
 
 
 class EvaluationHelper:

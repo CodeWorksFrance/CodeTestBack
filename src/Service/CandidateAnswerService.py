@@ -1,5 +1,5 @@
 from db_config import DBConfig
-from scr.Dto.CandidateAnswerDto import CandidateAnswerDto
+from src.Dto.CandidateAnswerDto import CandidateAnswerDto
 
 
 class CandidateAnswerService:

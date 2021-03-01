@@ -2,7 +2,7 @@ import typing
 
 import strawberry
 
-from scr.Models.Question import Question
+from src.Models.Question import Question
 
 
 @strawberry.type

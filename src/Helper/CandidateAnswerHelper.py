@@ -1,8 +1,8 @@
 import typing
 
-from scr.Dto import CandidateAnswerDto
-from scr.Models.CandidateAnswer import CandidateAnswer
-from scr.Service.CandidateAnswerService import CandidateAnswerService
+from src.Dto import CandidateAnswerDto
+from src.Models.CandidateAnswer import CandidateAnswer
+from src.Service.CandidateAnswerService import CandidateAnswerService
 
 
 class CandidateAnswerHelper:

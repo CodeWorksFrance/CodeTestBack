@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from scr.Dto import Base
+from src.Dto import Base
 
 
 class TechnologyDto(Base):

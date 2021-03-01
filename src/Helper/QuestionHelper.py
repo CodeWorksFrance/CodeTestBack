@@ -1,8 +1,8 @@
 import typing
 
-from scr.Dto import QuestionDto
-from scr.Models.Question import Question
-from scr.Service.QuestionService import QuestionService
+from src.Dto import QuestionDto
+from src.Models.Question import Question
+from src.Service.QuestionService import QuestionService
 
 
 class QuestionHelper:

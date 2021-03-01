@@ -1,5 +1,5 @@
 from db_config import DBConfig
-from scr.Dto.QuestionDto import QuestionDto
+from src.Dto.QuestionDto import QuestionDto
 
 
 class QuestionService:

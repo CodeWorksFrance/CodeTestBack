@@ -1,9 +1,9 @@
 import typing
 
-from scr.Dto.WorkshopDto import WorkshopDto
-from scr.Helper.EvaluationHelper import EvaluationHelper
-from scr.Models.Workshop import Workshop
-from scr.Service.WorkshopService import WorkshopService
+from src.Dto.WorkshopDto import WorkshopDto
+from src.Helper.EvaluationHelper import EvaluationHelper
+from src.Models.Workshop import Workshop
+from src.Service.WorkshopService import WorkshopService
 
 
 class WorkshopHelper:

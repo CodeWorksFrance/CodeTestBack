@@ -2,7 +2,7 @@ import typing
 
 import strawberry
 
-from scr.Models.Evaluation import Evaluation
+from src.Models.Evaluation import Evaluation
 
 
 @strawberry.type

@@ -1,5 +1,5 @@
 from db_config import DBConfig
-from scr.Dto.EvaluationDto import EvaluationDto
+from src.Dto.EvaluationDto import EvaluationDto
 
 
 class EvaluationService:

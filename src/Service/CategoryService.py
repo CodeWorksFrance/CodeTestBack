@@ -6,7 +6,6 @@ class CategoryService:
     @staticmethod
     def get_categories() -> [CategoryDto]:
         session = DBConfig().get_session()
-        print("get_engine: " + str(id(session)))
         query_result = session.query(CategoryDto)
         session.close()
         return query_result

@@ -6,14 +6,18 @@ from sqlalchemy.orm import sessionmaker
 
 class DBConfig:
     _instance = None
+    _session = None
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super(DBConfig, cls).__new__(cls, *args, **kwargs)
         return cls._instance
 
-    def __init__(self):
-        self.load = self.init_connection_engine()
+    def get_session(self):
+        if self._session is None:
+            self._session = sessionmaker(self.init_connection_engine())()
+
+        return self._session
 
     def init_connection_engine(self):
         db_config = {
@@ -116,5 +120,6 @@ class DBConfig:
         return pool
 
     def init_session(self):
+        print(id(self.load))
         session = sessionmaker(self.load)
         return session()

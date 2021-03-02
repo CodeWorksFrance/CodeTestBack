@@ -5,5 +5,8 @@ from src.Dto.CategoryDto import CategoryDto
 class CategoryService:
     @staticmethod
     def get_categories() -> [CategoryDto]:
-        session = DBConfig().init_session()
-        return session.query(CategoryDto)
+        session = DBConfig().get_session()
+        print("get_engine: " + str(id(session)))
+        query_result = session.query(CategoryDto)
+        session.close()
+        return query_result

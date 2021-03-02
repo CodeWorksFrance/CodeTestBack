@@ -5,8 +5,12 @@ from src.Dto.WorkshopDto import WorkshopDto
 class WorkshopService:
     @staticmethod
     def get_workshops(index: str) -> [WorkshopDto]:
-        session = DBConfig().init_session()
+        session = DBConfig().get_session()
         if index is None:
-            return session.query(WorkshopDto)
+            query_result = session.query(WorkshopDto)
+            session.close()
+            return query_result
 
-        return session.query(WorkshopDto).filter_by(id=index)
+        query_result = session.query(WorkshopDto).filter_by(id=index)
+        session.close()
+        return query_result

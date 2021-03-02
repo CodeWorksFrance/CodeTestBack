@@ -5,8 +5,12 @@ from src.Dto.QuestionDto import QuestionDto
 class QuestionService:
     @staticmethod
     def get_questions(index: str) -> [QuestionDto]:
-        session = DBConfig().init_session()
+        session = DBConfig().get_session()
         if index is None:
-            return session.query(QuestionDto)
+            query_result = session.query(QuestionDto)
+            session.close()
+            return query_result
 
-        return session.query(QuestionDto).filter_by(id=index)
+        query_result = session.query(QuestionDto).filter_by(id=index)
+        session.close()
+        return query_result

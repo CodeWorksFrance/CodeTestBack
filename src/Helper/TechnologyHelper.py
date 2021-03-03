@@ -12,9 +12,10 @@ class TechnologyHelper:
 
     @staticmethod
     def map_technologies(technologies: [TechnologyDto]):
-        return [Technology(t.id, t.label, t.type, QuestionHelper.map_questions(t.question)) for t in technologies]
+        return [Technology(t.id, t.label, t.type, t.image, QuestionHelper.map_questions(t.question))
+                for t in technologies]
 
     @staticmethod
     def map_technology(technology: TechnologyDto):
-        return Technology(technology.id, technology.label, technology.type,
+        return Technology(technology.id, technology.label, technology.type, technology.image,
                           QuestionHelper.map_questions(technology.question))

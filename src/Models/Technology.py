@@ -10,4 +10,5 @@ class Technology:
     id: str
     label: str
     type: str
+    image: str
     question: typing.List['Question']

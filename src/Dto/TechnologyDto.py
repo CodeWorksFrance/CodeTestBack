@@ -10,5 +10,6 @@ class TechnologyDto(Base):
     id = Column(String, primary_key=True)
     label = Column(String)
     type = Column(String)
+    image = Column(String)
     category_id = Column(String, ForeignKey('category.id'))
     question = relationship("QuestionDto")

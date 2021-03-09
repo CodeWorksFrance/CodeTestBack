@@ -12,4 +12,4 @@ class TechnologyDto(Base):
     type = Column(String)
     image = Column(String)
     category_id = Column(String, ForeignKey('category.id'))
-    question = relationship("QuestionDto")
+    question = relationship("QuestionDto", lazy='subquery')

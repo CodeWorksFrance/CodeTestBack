@@ -1,34 +1,23 @@
-import uuid
-
 from db_config import DBConfig
 from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.WorkshopDto import WorkshopDto
+from src.Enum.WorkshopState import WorkshopState
+from src.Service.Service import Service
 
 
-class WorkshopService:
-    @staticmethod
-    def get_workshops(index: str) -> [WorkshopDto]:
-        session = DBConfig().get_session()
-        if index is None:
-            query_result = session.query(WorkshopDto)
-            session.close()
-            return query_result
+class WorkshopService(Service):
+    _type = WorkshopDto
 
-        query_result = session.query(WorkshopDto).filter_by(id=index)
-        session.close()
-        return query_result
-
-    @staticmethod
-    def create_workshop(technologies: [str]) -> str:
-        new_workshop = WorkshopDto(id=str(uuid.uuid4()), state="In progress", evaluation=[])
+    def create_workshop(self, technologies: [str]) -> str:
+        new_workshop = WorkshopDto()
         for technology_id in technologies:
-            new_workshop.evaluation.append(
-                EvaluationDto(id=str(uuid.uuid4()), state="Pending", workshop_id=new_workshop.id, technology_id=technology_id))
+            new_workshop.evaluation.append(EvaluationDto(workshop_id=new_workshop.id, technology_id=technology_id))
 
-        session = DBConfig().get_session()
-        session.add(new_workshop)
-        session.commit()
-        new_workshop_id = str(new_workshop.id)
-        session.close()
+        return self.create(new_workshop).id
 
-        return new_workshop_id
+    def is_closed_workshop(self, index: str):
+        query_result = self.get().filter(WorkshopDto.id == index).first()
+        return query_result is None or query_result.state == WorkshopState.FINISHED
+
+    def close_workshop(self, index: str):
+        self.update(index=index, instruction={WorkshopDto.state: WorkshopState.FINISHED})

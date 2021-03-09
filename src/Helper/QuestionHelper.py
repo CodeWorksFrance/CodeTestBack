@@ -7,7 +7,7 @@ from src.Service.QuestionService import QuestionService
 
 class QuestionHelper:
     def retrieve_question(self, index: str) -> typing.List[Question]:
-        return self.map_questions(QuestionService.get_questions(index))
+        return self.map_questions(QuestionService().get(index))
 
     @staticmethod
     def map_questions(questions: [QuestionDto]):

@@ -8,7 +8,7 @@ from src.Service.CategoryService import CategoryService
 
 class CategoryHelper:
     def retrieve_category(self) -> typing.List[Category]:
-        return self.map_categories(CategoryService.get_categories())
+        return self.map_categories(CategoryService().get())
 
     @staticmethod
     def map_categories(categories: [CategoryDto]):

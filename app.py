@@ -1,11 +1,14 @@
+import atexit
 import typing
 
 import strawberry
 
+from db_config import DBConfig
 from src.Helper.CategoryHelper import CategoryHelper
 from src.Helper.QuestionHelper import QuestionHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Helper.WorkshopHelper import WorkshopHelper
+from src.Models.CandidateAnswer import CandidateAnswer
 from src.Models.Category import Category
 from src.Models.Question import Question
 from src.Models.Technology import Technology
@@ -30,6 +33,10 @@ class Query:
     def workshop(self, index: str = None) -> typing.List['Workshop']:
         return WorkshopHelper().retrieve_workshop(index=index)
 
+    @strawberry.field
+    def next_question(self, workshop_id: str) -> typing.List['CandidateAnswer']:
+        return WorkshopHelper().retrieve_next_question(workshop_id)
+
 
 @strawberry.type
 class Mutation:
@@ -39,3 +46,8 @@ class Mutation:
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
+
+
+@atexit.register
+def goodbye():
+    DBConfig.close_all_sessions()

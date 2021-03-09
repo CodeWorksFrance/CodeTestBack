@@ -1,16 +1,13 @@
-from db_config import DBConfig
 from src.Dto.QuestionDto import QuestionDto
+from src.Service.Service import Service
 
 
-class QuestionService:
-    @staticmethod
-    def get_questions(index: str) -> [QuestionDto]:
-        session = DBConfig().get_session()
-        if index is None:
-            query_result = session.query(QuestionDto)
-            session.close()
-            return query_result
+class QuestionService(Service):
+    _type = QuestionDto
 
-        query_result = session.query(QuestionDto).filter_by(id=index)
-        session.close()
-        return query_result
+    def get_question_technology(self, technology_id: str, excluded_ids: [str] = None) -> QuestionDto:
+        if excluded_ids is None:
+            excluded_ids = []
+
+        return self.get().filter(QuestionDto.technology_id == technology_id).filter(
+            QuestionDto.id.notin_(excluded_ids)).first()

@@ -8,7 +8,7 @@ from src.Service.TechnologyService import TechnologyService
 
 class TechnologyHelper:
     def retrieve_technology(self) -> typing.List[Technology]:
-        return self.map_technologies(TechnologyService.get_technologies())
+        return self.map_technologies(TechnologyService().get())
 
     @staticmethod
     def map_technologies(technologies: [TechnologyDto]):

@@ -9,4 +9,4 @@ class CategoryDto(Base):
 
     id = Column(String, primary_key=True)
     label = Column(String)
-    technology = relationship("TechnologyDto")
+    technology = relationship("TechnologyDto", lazy='subquery')

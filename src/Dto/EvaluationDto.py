@@ -1,16 +1,19 @@
+import uuid
+
 from sqlalchemy import Column, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
 from src.Dto import Base
+from src.Enum.EvaluationState import EvaluationState
 
 
 class EvaluationDto(Base):
     __tablename__ = 'evaluation'
 
-    id = Column(String, primary_key=True)
-    state = Column(String)
-    score = Column(Float)
+    id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    state = Column(String, default=EvaluationState.PENDING.value)
+    score = Column(Float, nullable=True)
     workshop_id = Column(String, ForeignKey('workshop.id'))
-    candidate_answer = relationship("CandidateAnswerDto")
+    candidate_answer = relationship("CandidateAnswerDto", lazy='subquery')
     technology_id = Column(String, ForeignKey('technology.id'))
-    technology = relationship("TechnologyDto")
+    technology = relationship("TechnologyDto", lazy='subquery')

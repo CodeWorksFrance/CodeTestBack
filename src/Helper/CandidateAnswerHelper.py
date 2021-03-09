@@ -7,7 +7,7 @@ from src.Service.CandidateAnswerService import CandidateAnswerService
 
 class CandidateAnswerHelper:
     def retrieve_candidate_answers(self) -> typing.List[CandidateAnswer]:
-        return self.map_candidate_answers(CandidateAnswerService.get_candidate_answers())
+        return self.map_candidate_answers(CandidateAnswerService().get())
 
     @staticmethod
     def map_candidate_answers(candidate_answers: [CandidateAnswerDto]):

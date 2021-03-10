@@ -26,13 +26,10 @@ class Service(ABC):
         element_id = str(element.id)
         session.close()
 
-        return self.get(element_id)
+        return self.get(element_id).first()
 
     def update(self, index: str, instruction: dict):
         session = DBConfig().get_session()
-        query_result = session.query(self._type).filter(self._type.id == index).first()
-
-        if query_result is not None:
-            query_result.update(instruction)
-
+        session.query(self._type).filter(self._type.id == index).update(instruction)
+        session.commit()
         session.close()

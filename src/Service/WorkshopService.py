@@ -1,4 +1,3 @@
-from db_config import DBConfig
 from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.WorkshopDto import WorkshopDto
 from src.Enum.WorkshopState import WorkshopState

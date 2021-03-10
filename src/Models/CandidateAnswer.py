@@ -1,4 +1,5 @@
 import strawberry
+import typing
 
 from src.Models.Question import Question
 
@@ -7,5 +8,5 @@ from src.Models.Question import Question
 class CandidateAnswer:
     id: str
     state: str
-    score: float
+    score: typing.Optional[float]
     question: Question

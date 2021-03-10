@@ -10,6 +10,6 @@ from src.Models.Technology import Technology
 class Evaluation:
     id: str
     state: str
-    score: float
+    score: typing.Optional[float]
     candidate_answer: typing.List['CandidateAnswer']
     technology: Technology

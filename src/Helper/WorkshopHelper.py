@@ -27,7 +27,7 @@ class WorkshopHelper:
             WorkshopService().close_workshop(workshop_id)
             return []
 
-        EvaluationService.set_current_workshop_evaluation(workshop_id)
+        EvaluationService().set_current_workshop_evaluation(workshop_id)
         current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)
 
         return EvaluationHelper().retrieve_next_question(current_evaluation.id, current_evaluation.technology_id)

@@ -10,7 +10,7 @@ class CandidateAnswerService(Service):
         return self.get().filter(CandidateAnswerDto.evaluation_id == evaluation_id).filter(
             CandidateAnswerDto.state == CandidateAnswerState.PENDING.value).first()
 
-    def get_closed_evaluation_candidate_answer(self, evaluation_id: str) -> [CandidateAnswerDto]:
+    def get_closed_evaluation_candidate_answers(self, evaluation_id: str) -> [CandidateAnswerDto]:
         return self.get().filter(CandidateAnswerDto.evaluation_id == evaluation_id).filter(
             CandidateAnswerDto.state != CandidateAnswerState.PENDING.value)
 

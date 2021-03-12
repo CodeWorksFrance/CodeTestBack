@@ -1,14 +1,18 @@
-import typing
-
 from src.Dto import CandidateAnswerDto
+from src.Helper.Helper import Helper
 from src.Models.CandidateAnswer import CandidateAnswer
 from src.Service.CandidateAnswerService import CandidateAnswerService
 
 
-class CandidateAnswerHelper:
-    def retrieve_candidate_answers(self) -> typing.List[CandidateAnswer]:
-        return self.map_candidate_answers(CandidateAnswerService().get())
+class CandidateAnswerHelper(Helper):
+    # Inheritance #
+    _type_dto = CandidateAnswerDto
+    _type_model = CandidateAnswer
+    _type_service = CandidateAnswerService
 
     @staticmethod
-    def map_candidate_answers(candidate_answers: [CandidateAnswerDto]):
-        return [CandidateAnswer(c.id, c.state, c.score, c.question) for c in candidate_answers]
+    def map(candidate_answer: CandidateAnswerDto) -> CandidateAnswer:
+        return CandidateAnswer(candidate_answer.id, candidate_answer.state, candidate_answer.score,
+                               candidate_answer.question)
+
+    # New behaviour #

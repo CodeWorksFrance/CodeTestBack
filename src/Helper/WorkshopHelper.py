@@ -1,21 +1,27 @@
-import typing
-
 from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.WorkshopDto import WorkshopDto
 from src.Helper.EvaluationHelper import EvaluationHelper
+from src.Helper.Helper import Helper
 from src.Models.CandidateAnswer import CandidateAnswer
 from src.Models.Workshop import Workshop
 from src.Service.EvaluationService import EvaluationService
 from src.Service.WorkshopService import WorkshopService
 
 
-class WorkshopHelper:
-    def retrieve_workshop(self, index: str) -> typing.List[Workshop]:
-        return self.map_workshops(WorkshopService().get(index))
+class WorkshopHelper(Helper):
+    # Inheritance #
+    _type_dto = WorkshopDto
+    _type_model = Workshop
+    _type_service = WorkshopService
 
+    @staticmethod
+    def map(workshop: WorkshopDto) -> Workshop:
+        return Workshop(workshop.id, workshop.state, workshop.score,
+                        EvaluationHelper().map_all(workshop.evaluation))
+
+    # New behaviour #
     def create_workshop(self, technologies: [str]) -> Workshop:
-        workshop_id = WorkshopService().create_workshop(technologies)
-        return self.retrieve_workshop(workshop_id)[0]
+        return self.map(WorkshopService().create_workshop(technologies))
 
     @staticmethod
     def retrieve_next_question(workshop_id: str) -> [CandidateAnswer]:
@@ -31,12 +37,3 @@ class WorkshopHelper:
         current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)
 
         return EvaluationHelper().retrieve_next_question(current_evaluation.id, current_evaluation.technology_id)
-
-    @staticmethod
-    def map_workshop(workshop: WorkshopDto):
-        return Workshop(workshop.id, workshop.state, workshop.score,
-                        EvaluationHelper.map_evaluations(workshop.evaluation))
-
-    @staticmethod
-    def map_workshops(workshops: [WorkshopDto]):
-        return [Workshop(w.id, w.state, w.score, EvaluationHelper.map_evaluations(w.evaluation)) for w in workshops]

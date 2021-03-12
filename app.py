@@ -19,19 +19,19 @@ from src.Models.Workshop import Workshop
 class Query:
     @strawberry.field
     def category(self) -> typing.List['Category']:
-        return CategoryHelper().retrieve_category()
+        return CategoryHelper().retrieve()
 
     @strawberry.field
     def technology(self) -> typing.List['Technology']:
-        return TechnologyHelper().retrieve_technology()
+        return TechnologyHelper().retrieve()
 
     @strawberry.field
     def question(self, index: str = None) -> typing.List['Question']:
-        return QuestionHelper().retrieve_question(index=index)
+        return QuestionHelper().retrieve(index=index)
 
     @strawberry.field
     def workshop(self, index: str = None) -> typing.List['Workshop']:
-        return WorkshopHelper().retrieve_workshop(index=index)
+        return WorkshopHelper().retrieve(index=index)
 
     @strawberry.field
     def next_question(self, workshop_id: str) -> typing.List['CandidateAnswer']:

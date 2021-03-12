@@ -1,15 +1,18 @@
-import typing
-
 from src.Dto.CategoryDto import CategoryDto
+from src.Helper.Helper import Helper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Models.Category import Category
 from src.Service.CategoryService import CategoryService
 
 
-class CategoryHelper:
-    def retrieve_category(self) -> typing.List[Category]:
-        return self.map_categories(CategoryService().get())
+class CategoryHelper(Helper):
+    # Inheritance #
+    _type_dto = CategoryDto
+    _type_model = Category
+    _type_service = CategoryService
 
     @staticmethod
-    def map_categories(categories: [CategoryDto]):
-        return [Category(c.id, c.label, TechnologyHelper.map_technologies(c.technology)) for c in categories]
+    def map(category: CategoryDto) -> Category:
+        return Category(category.id, category.label, TechnologyHelper().map_all(category.technology))
+
+    # New behaviour #

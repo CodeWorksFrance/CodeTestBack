@@ -1,3 +1,5 @@
+from typing import Optional
+
 from src.Dto.CandidateAnswerDto import CandidateAnswerDto
 from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.QuestionDto import QuestionDto
@@ -25,11 +27,11 @@ class EvaluationHelper(Helper):
 
     # New behaviour #
     @staticmethod
-    def retrieve_next_question(evaluation_id: str, technology_id: str) -> [CandidateAnswer]:
+    def retrieve_next_question(evaluation_id: str, technology_id: str) -> Optional[CandidateAnswer]:
         current_candidate_answer: CandidateAnswerDto = CandidateAnswerService().get_current_evaluation_candidate_answer(
             evaluation_id)
         if current_candidate_answer is not None:
-            return CandidateAnswerHelper().map_all([current_candidate_answer])
+            return CandidateAnswerHelper().map(current_candidate_answer)
 
         new_question: QuestionDto = QuestionService().get_question_technology(
             technology_id=technology_id,
@@ -41,5 +43,4 @@ class EvaluationHelper(Helper):
         new_candidate_answer: CandidateAnswerDto = CandidateAnswerService().set_current_evaluation_candidate_answer(
             evaluation_id=evaluation_id, question_id=new_question.id)
 
-        return [] if new_candidate_answer is None else CandidateAnswerHelper().map_all(
-            [new_candidate_answer])
+        return None if new_candidate_answer is None else CandidateAnswerHelper().map(new_candidate_answer)

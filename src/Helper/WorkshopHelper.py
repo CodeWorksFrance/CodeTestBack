@@ -1,3 +1,5 @@
+from typing import Optional
+
 from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.WorkshopDto import WorkshopDto
 from src.Helper.EvaluationHelper import EvaluationHelper
@@ -24,14 +26,14 @@ class WorkshopHelper(Helper):
         return self.map(WorkshopService().create_workshop(technologies))
 
     @staticmethod
-    def retrieve_next_question(workshop_id: str) -> [CandidateAnswer]:
+    def retrieve_next_question(workshop_id: str) -> Optional[CandidateAnswer]:
         if WorkshopService().is_closed_workshop(workshop_id):
-            return []
+            return None
 
         if EvaluationService().get_current_workshop_evaluation(
                 workshop_id) is None and not EvaluationService().has_potential_next_workshop_evaluation(workshop_id):
             WorkshopService().close_workshop(workshop_id)
-            return []
+            return None
 
         EvaluationService().set_current_workshop_evaluation(workshop_id)
         current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)

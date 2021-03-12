@@ -17,24 +17,45 @@ from src.Models.Workshop import Workshop
 
 @strawberry.type
 class Query:
+    # Category #
     @strawberry.field
-    def category(self) -> typing.List['Category']:
+    def categories(self) -> typing.List[Category]:
         return CategoryHelper().retrieve()
 
     @strawberry.field
-    def technology(self) -> typing.List['Technology']:
+    def category(self, index: str) -> typing.Optional[Category]:
+        return CategoryHelper().retrieve_by_index(index)
+
+    # Technology #
+    @strawberry.field
+    def technologies(self) -> typing.List[Technology]:
         return TechnologyHelper().retrieve()
 
     @strawberry.field
-    def question(self, index: str = None) -> typing.List['Question']:
-        return QuestionHelper().retrieve(index=index)
+    def technology(self, index: str) -> typing.Optional[Technology]:
+        return TechnologyHelper().retrieve_by_index(index)
+
+    # Question #
+    @strawberry.field
+    def questions(self) -> typing.List[Question]:
+        return QuestionHelper().retrieve()
 
     @strawberry.field
-    def workshop(self, index: str = None) -> typing.List['Workshop']:
-        return WorkshopHelper().retrieve(index=index)
+    def question(self, index: str) -> typing.Optional[Question]:
+        return QuestionHelper().retrieve_by_index(index)
+
+    # Workshop #
+    @strawberry.field
+    def workshops(self) -> typing.List[Workshop]:
+        return WorkshopHelper().retrieve()
 
     @strawberry.field
-    def next_question(self, workshop_id: str) -> typing.List['CandidateAnswer']:
+    def workshop(self, index: str) -> typing.Optional[Workshop]:
+        return WorkshopHelper().retrieve_by_index(index)
+
+    # Next Question #
+    @strawberry.field
+    def next_question(self, workshop_id: str) -> typing.Optional[CandidateAnswer]:
         return WorkshopHelper().retrieve_next_question(workshop_id)
 
 

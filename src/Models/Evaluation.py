@@ -11,5 +11,5 @@ class Evaluation:
     id: str
     state: str
     score: typing.Optional[float]
-    candidate_answer: typing.List['CandidateAnswer']
+    candidate_answer: typing.List[CandidateAnswer]
     technology: Technology

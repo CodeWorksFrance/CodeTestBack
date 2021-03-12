@@ -10,4 +10,4 @@ class Workshop:
     id: str
     state: str
     score: typing.Optional[float]
-    evaluation: typing.List['Evaluation']
+    evaluation: typing.List[Evaluation]

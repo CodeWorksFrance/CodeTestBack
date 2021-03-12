@@ -24,5 +24,9 @@ class Helper(ABC):
     def map_all(self, elements_dto: [_type_dto]):
         return [self.map(element_dto) for element_dto in elements_dto]
 
-    def retrieve(self, index: str = None) -> typing.List[type(_type_model)]:
-        return self.map_all(self._type_service().get(index))
+    def retrieve(self) -> typing.List[type(_type_model)]:
+        return self.map_all(self._type_service().get())
+
+    def retrieve_by_index(self, index: str) -> typing.Optional[type(_type_model)]:
+        element = self._type_service().get(index).first()
+        return None if element is None else self.map(element)

@@ -27,15 +27,20 @@ class WorkshopHelper(Helper):
 
     @staticmethod
     def retrieve_next_question(workshop_id: str) -> Optional[EvaluationQuestion]:
+        # Check if the workshop is closed
         if WorkshopService().is_closed_workshop(workshop_id):
             return None
 
+        # Close the workshop if needed
         if EvaluationService().get_current_workshop_evaluation(
                 workshop_id) is None and not EvaluationService().has_potential_next_workshop_evaluation(workshop_id):
             WorkshopService().close_workshop(workshop_id)
             return None
 
-        EvaluationService().set_current_workshop_evaluation(workshop_id)
+        # Get the current evaluation or set a new one
         current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)
+        if current_evaluation is None:
+            EvaluationService().set_current_workshop_evaluation(workshop_id)
+            current_evaluation = EvaluationService().get_current_workshop_evaluation(workshop_id)
 
         return EvaluationHelper().retrieve_next_question(current_evaluation.id, current_evaluation.technology_id)

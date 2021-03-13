@@ -28,11 +28,13 @@ class EvaluationHelper(Helper):
     # New behaviour #
     @staticmethod
     def retrieve_next_question(evaluation_id: str, technology_id: str) -> Optional[EvaluationQuestion]:
+        # Check if a question is already pending
         evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().get_current_evaluation_question(
             evaluation_id)
         if evaluation_question is not None:
             return EvaluationQuestionHelper().map(evaluation_question)
 
+        # If their is no pending question select a new one excluding the already asked
         new_question: QuestionDto = QuestionService().get_question_technology(
             technology_id=technology_id,
             excluded_ids=list(
@@ -40,6 +42,7 @@ class EvaluationHelper(Helper):
                     EvaluationQuestionService().get_closed_evaluation_questions(evaluation_id)))
         )
 
+        # Create a new evaluation question for the question
         new_evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().set_current_evaluation_question(
             evaluation_id=evaluation_id, question_id=new_question.id)
 

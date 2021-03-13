@@ -2,7 +2,7 @@ import typing
 
 import strawberry
 
-from src.Models.CandidateAnswer import CandidateAnswer
+from src.Models.EvaluationQuestion import EvaluationQuestion
 from src.Models.Technology import Technology
 
 
@@ -11,5 +11,5 @@ class Evaluation:
     id: str
     state: str
     score: typing.Optional[float]
-    candidate_answer: typing.List[CandidateAnswer]
+    evaluation_question: typing.List[EvaluationQuestion]
     technology: Technology

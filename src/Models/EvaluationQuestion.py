@@ -5,7 +5,7 @@ from src.Models.Question import Question
 
 
 @strawberry.type
-class CandidateAnswer:
+class EvaluationQuestion:
     id: str
     state: str
     score: typing.Optional[float]

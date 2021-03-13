@@ -2,14 +2,14 @@ from sqlalchemy import Column, String, Float, ForeignKey, text
 from sqlalchemy.orm import relationship
 
 from src.Dto import Base
-from src.Enum.CandidateAnswerState import CandidateAnswerState
+from src.Enum.EvaluationQuestionState import EvaluationQuestionState
 
 
-class CandidateAnswerDto(Base):
-    __tablename__ = 'candidate_answer'
+class EvaluationQuestionDto(Base):
+    __tablename__ = 'evaluation_question'
 
     id = Column(String, primary_key=True, server_default=text('uuid_generate_v4()'))
-    state = Column(String, default=CandidateAnswerState.PENDING.value)
+    state = Column(String, default=EvaluationQuestionState.PENDING.value)
     score = Column(Float, nullable=True)
     evaluation_id = Column(String, ForeignKey('evaluation.id'))
     question_id = Column(String, ForeignKey('question.id'))

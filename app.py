@@ -8,7 +8,7 @@ from src.Helper.CategoryHelper import CategoryHelper
 from src.Helper.QuestionHelper import QuestionHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Helper.WorkshopHelper import WorkshopHelper
-from src.Models.CandidateAnswer import CandidateAnswer
+from src.Models.EvaluationQuestion import EvaluationQuestion
 from src.Models.Category import Category
 from src.Models.Question import Question
 from src.Models.Technology import Technology
@@ -55,7 +55,7 @@ class Query:
 
     # Next Question #
     @strawberry.field
-    def next_question(self, workshop_id: str) -> typing.Optional[CandidateAnswer]:
+    def next_question(self, workshop_id: str) -> typing.Optional[EvaluationQuestion]:
         return WorkshopHelper().retrieve_next_question(workshop_id)
 
 

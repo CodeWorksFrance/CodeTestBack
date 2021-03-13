@@ -12,6 +12,6 @@ class EvaluationDto(Base):
     state = Column(String, default=EvaluationState.PENDING.value)
     score = Column(Float, nullable=True)
     workshop_id = Column(String, ForeignKey('workshop.id'))
-    candidate_answer = relationship("CandidateAnswerDto", lazy='subquery')
+    evaluation_question = relationship("EvaluationQuestionDto", lazy='subquery')
     technology_id = Column(String, ForeignKey('technology.id'))
     technology = relationship("TechnologyDto", lazy='subquery')

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class CandidateAnswerState(Enum):
+class EvaluationQuestionState(Enum):
     PENDING = 'Pending'
     CORRECT = 'Correct'
     INCORRECT = 'Incorrect'

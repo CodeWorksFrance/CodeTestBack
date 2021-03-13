@@ -4,7 +4,7 @@ from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.WorkshopDto import WorkshopDto
 from src.Helper.EvaluationHelper import EvaluationHelper
 from src.Helper.Helper import Helper
-from src.Models.CandidateAnswer import CandidateAnswer
+from src.Models.EvaluationQuestion import EvaluationQuestion
 from src.Models.Workshop import Workshop
 from src.Service.EvaluationService import EvaluationService
 from src.Service.WorkshopService import WorkshopService
@@ -26,7 +26,7 @@ class WorkshopHelper(Helper):
         return self.map(WorkshopService().create_workshop(technologies))
 
     @staticmethod
-    def retrieve_next_question(workshop_id: str) -> Optional[CandidateAnswer]:
+    def retrieve_next_question(workshop_id: str) -> Optional[EvaluationQuestion]:
         if WorkshopService().is_closed_workshop(workshop_id):
             return None
 

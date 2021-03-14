@@ -3,6 +3,10 @@ from typing import Optional
 from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.EvaluationQuestionDto import EvaluationQuestionDto
 from src.Dto.QuestionDto import QuestionDto
+from src.Dto.TechnologyDto import TechnologyDto
+from src.Enum.Difficulty import Difficulty
+from src.Enum.EvaluationQuestionState import EvaluationQuestionState
+from src.Enum.TechnologyType import TechnologyType
 from src.Helper.EvaluationQuestionHelper import EvaluationQuestionHelper
 from src.Helper.Helper import Helper
 from src.Helper.TechnologyHelper import TechnologyHelper
@@ -26,8 +30,7 @@ class EvaluationHelper(Helper):
                           TechnologyHelper.map(evaluation.technology))
 
     # New behaviour #
-    @staticmethod
-    def retrieve_next_question(evaluation_id: str, technology_id: str) -> Optional[EvaluationQuestion]:
+    def retrieve_next_question(self, evaluation_id: str, technology_id: str) -> Optional[EvaluationQuestion]:
         # Check if a question is already pending
         evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().get_current_evaluation_question(
             evaluation_id)
@@ -37,6 +40,7 @@ class EvaluationHelper(Helper):
         # If their is no pending question select a new one excluding the already asked
         new_question: QuestionDto = QuestionService().get_question_technology(
             technology_id=technology_id,
+            difficulty=self.calculate_next_difficulty(evaluation_id=evaluation_id, technology_id=technology_id),
             excluded_ids=list(
                 map(lambda e: str(e.question_id),
                     EvaluationQuestionService().get_closed_evaluation_questions(evaluation_id)))
@@ -47,3 +51,54 @@ class EvaluationHelper(Helper):
             evaluation_id=evaluation_id, question_id=new_question.id)
 
         return None if new_evaluation_question is None else EvaluationQuestionHelper().map(new_evaluation_question)
+
+    def calculate_next_difficulty(self, evaluation_id: str, technology_id: str) -> str:
+        technology: TechnologyDto = TechnologyHelper().retrieve_by_index(technology_id)
+        if technology is None:
+            return Difficulty.D1.value
+
+        if technology.type == TechnologyType.SIMPLE_QUESTION.value:
+            return self.calculate_next_difficulty_for_simple_question(evaluation_id)
+
+        return Difficulty.D1.value
+
+    def calculate_next_difficulty_for_simple_question(self, evaluation_id: str) -> str:
+        asked_questions: [EvaluationQuestionDto] = EvaluationQuestionService().get_closed_evaluation_questions(
+            evaluation_id)
+
+        # Return first difficulty if it's the first question
+        if len(asked_questions) == 0:
+            return Difficulty.D1.value
+
+        # Difficulty up if correct answers
+        last_question_asked: EvaluationQuestionDto = asked_questions[-1]
+        if last_question_asked.state == EvaluationQuestionState.CORRECT:
+            return self.calculate_difficulty_up(last_question_asked.question.difficulty)
+
+        # Difficulty down if 2 successive errors
+        if len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT:
+            if asked_questions[-2].state == EvaluationQuestionState.INCORRECT:
+                return self.calculate_difficulty_down(last_question_asked.question.difficulty)
+
+        # Same difficulty if skipped or first error
+        return last_question_asked.question.difficulty
+
+    @staticmethod
+    def calculate_difficulty_up(current: str) -> str:
+        switcher: dict = {
+            Difficulty.D1.value: Difficulty.D2.value,
+            Difficulty.D2.value: Difficulty.D3.value,
+            Difficulty.D3.value: Difficulty.D4.value
+        }
+
+        return switcher.get(current, Difficulty.D5.value)
+
+    @staticmethod
+    def calculate_difficulty_down(current: str) -> str:
+        switcher: dict = {
+            Difficulty.D5.value: Difficulty.D4.value,
+            Difficulty.D4.value: Difficulty.D3.value,
+            Difficulty.D3.value: Difficulty.D2.value
+        }
+
+        return switcher.get(current, Difficulty.D1.value)

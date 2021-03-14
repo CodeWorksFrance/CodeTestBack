@@ -14,3 +14,4 @@ class EvaluationQuestionDto(Base):
     evaluation_id = Column(String, ForeignKey('evaluation.id'))
     question_id = Column(String, ForeignKey('question.id'))
     question = relationship("QuestionDto", lazy='subquery')
+    creation_date = Column(String, server_default=text('now()'))

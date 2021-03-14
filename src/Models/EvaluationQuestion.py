@@ -9,4 +9,5 @@ class EvaluationQuestion:
     id: str
     state: str
     score: typing.Optional[float]
+    creation_date: str
     question: Question

@@ -13,6 +13,6 @@ class EvaluationQuestionHelper(Helper):
     @staticmethod
     def map(evaluation_question: EvaluationQuestionDto) -> EvaluationQuestion:
         return EvaluationQuestion(evaluation_question.id, evaluation_question.state, evaluation_question.score,
-                                  evaluation_question.question)
+                                  evaluation_question.creation_date, evaluation_question.question)
 
     # New behaviour #

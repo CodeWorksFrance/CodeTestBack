@@ -37,7 +37,7 @@ class EvaluationHelper(Helper):
         if evaluation_question is not None:
             return EvaluationQuestionHelper().map(evaluation_question)
 
-        # If their is no pending question select a new one excluding the already asked
+        # If there is no pending question select a new one excluding the already asked
         new_question: QuestionDto = QuestionService().get_question_technology(
             technology_id=technology_id,
             difficulty=self.calculate_next_difficulty(evaluation_id=evaluation_id, technology_id=technology_id),

@@ -13,7 +13,7 @@ class EvaluationQuestionService(Service):
     def get_closed_evaluation_questions(self, evaluation_id: str) -> [EvaluationQuestionDto]:
         return self.get().filter(EvaluationQuestionDto.evaluation_id == evaluation_id).filter(
             EvaluationQuestionDto.state != EvaluationQuestionState.PENDING.value).order_by(
-            EvaluationQuestionDto.creation_date)
+            EvaluationQuestionDto.creation_date).all()
 
     def set_current_evaluation_question(self, evaluation_id: str, question_id: str) -> EvaluationQuestionDto:
         return self.create(EvaluationQuestionDto(evaluation_id=evaluation_id, question_id=question_id))

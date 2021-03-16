@@ -20,7 +20,4 @@ class ScoreHelper:
             values.sort()
             top_scores = values[-3:]
 
-        print(values)
-        print(top_scores)
-
         return sum(top_scores) / len(top_scores)

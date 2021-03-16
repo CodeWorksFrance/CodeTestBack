@@ -31,8 +31,8 @@ class EvaluationHelper(Helper):
                           TechnologyHelper.map(evaluation.technology))
 
     # New behaviour #
-    __max_error_simple_question: int = 3
-    __max_difficulty_good_answer_simple_question: int = 3
+    __MAX_ERROR: int = 3
+    __MAX_DIFFICULTY_GOOD_ANSWERS_MAX_NUMBER: int = 3
 
     def retrieve_next_question(self, evaluation_id: str, technology_id: str) -> Optional[EvaluationQuestion]:
         # Check if a question is already pending
@@ -101,8 +101,8 @@ class EvaluationHelper(Helper):
             lambda q: q.question.difficulty == Difficulty.D5.value and q.state == EvaluationQuestionState.CORRECT.value,
             evaluation.evaluation_question))
 
-        if (len(bad_answer) >= self.__max_error_simple_question
-                or len(max_difficulty_good_answer) >= self.__max_difficulty_good_answer_simple_question):
+        if (len(bad_answer) >= self.__MAX_ERROR
+                or len(max_difficulty_good_answer) >= self.__MAX_DIFFICULTY_GOOD_ANSWERS_MAX_NUMBER):
             return True
 
         return False

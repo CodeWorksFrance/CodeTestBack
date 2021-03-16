@@ -76,12 +76,12 @@ class EvaluationHelper(Helper):
 
         # Difficulty up if correct answers
         last_question_asked: EvaluationQuestionDto = asked_questions[-1]
-        if last_question_asked.state == EvaluationQuestionState.CORRECT:
+        if last_question_asked.state == EvaluationQuestionState.CORRECT.value:
             return self.calculate_difficulty_up(last_question_asked.question.difficulty)
 
         # Difficulty down if 2 successive errors
-        if (len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT and
-                asked_questions[-2].state == EvaluationQuestionState.INCORRECT):
+        if (len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT.value and
+                asked_questions[-2].state == EvaluationQuestionState.INCORRECT.value):
             return self.calculate_difficulty_down(last_question_asked.question.difficulty)
 
         # Same difficulty if skipped or first error
@@ -95,9 +95,9 @@ class EvaluationHelper(Helper):
 
     def evaluation_must_be_closed_for_simple_question(self, evaluation: EvaluationDto) -> bool:
         bad_answer = list(
-            filter(lambda q: q.status == EvaluationQuestionState.INCORRECT, evaluation.evaluation_question))
+            filter(lambda q: q.state == EvaluationQuestionState.INCORRECT.value, evaluation.evaluation_question))
         max_difficulty_good_answer = list(filter(
-            lambda q: q.difficulty == Difficulty.D5.value and q.status == EvaluationQuestionState.CORRECT,
+            lambda q: q.question.difficulty == Difficulty.D5.value and q.state == EvaluationQuestionState.CORRECT.value,
             evaluation.evaluation_question))
 
         if (len(bad_answer) >= self.__max_error_simple_question

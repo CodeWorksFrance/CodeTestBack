@@ -11,3 +11,7 @@ class QuestionDto(Base):
     answer = Column(String)
     difficulty = Column(String)
     technology_id = Column(String, ForeignKey('technology.id'))
+
+    __mapper_args__ = {
+        "order_by": difficulty
+    }

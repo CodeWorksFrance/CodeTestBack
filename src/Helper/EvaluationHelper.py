@@ -30,6 +30,9 @@ class EvaluationHelper(Helper):
                           TechnologyHelper.map(evaluation.technology))
 
     # New behaviour #
+    __max_error_simple_question: int = 3
+    __max_difficulty_good_answer_simple_question: int = 3
+
     def retrieve_next_question(self, evaluation_id: str, technology_id: str) -> Optional[EvaluationQuestion]:
         # Check if a question is already pending
         evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().get_current_evaluation_question(
@@ -83,6 +86,29 @@ class EvaluationHelper(Helper):
 
         # Same difficulty if skipped or first error
         return last_question_asked.question.difficulty
+
+    def evaluation_must_be_closed(self, evaluation: EvaluationDto) -> bool:
+        if evaluation.technology.type == TechnologyType.SIMPLE_QUESTION.value:
+            return self.evaluation_must_be_closed_for_simple_question(evaluation)
+
+        return True
+
+    def evaluation_must_be_closed_for_simple_question(self, evaluation: EvaluationDto) -> bool:
+        bad_answer = list(
+            filter(lambda q: q.status == EvaluationQuestionState.INCORRECT, evaluation.evaluation_question))
+        max_difficulty_good_answer = list(filter(
+            lambda q: q.difficulty == Difficulty.D5.value and q.status == EvaluationQuestionState.CORRECT,
+            evaluation.evaluation_question))
+
+        if (len(bad_answer) >= self.__max_error_simple_question
+                or len(max_difficulty_good_answer) >= self.__max_difficulty_good_answer_simple_question):
+            return True
+
+        return False
+
+    @staticmethod
+    def close_evaluation(evaluation: EvaluationDto):
+        EvaluationService().close_evaluation(evaluation.id)
 
     @staticmethod
     def calculate_difficulty_up(current: str) -> str:

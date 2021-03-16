@@ -20,3 +20,6 @@ class EvaluationService(Service):
 
         if query_result is not None:
             self.update(index=query_result.id, instruction={EvaluationDto.state: EvaluationState.IN_PROGRESS.value})
+
+    def close_evaluation(self, index: str):
+        self.update(index=index, instruction={EvaluationDto.state: EvaluationState.FINISHED})

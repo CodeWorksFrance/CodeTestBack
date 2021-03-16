@@ -25,22 +25,33 @@ class WorkshopHelper(Helper):
     def create_workshop(self, technologies: [str]) -> Workshop:
         return self.map(WorkshopService().create_workshop(technologies))
 
-    @staticmethod
-    def retrieve_next_question(workshop_id: str) -> Optional[EvaluationQuestion]:
+    def retrieve_next_question(self, workshop_id: str) -> Optional[EvaluationQuestion]:
         # Check if the workshop is closed
         if WorkshopService().is_closed_workshop(workshop_id):
             return None
 
+        # Get the current evaluation
+        current_evaluation: EvaluationDto = self.get_current_evaluation(workshop_id)
+
         # Close the workshop if needed
-        if EvaluationService().get_current_workshop_evaluation(
-                workshop_id) is None and not EvaluationService().has_potential_next_workshop_evaluation(workshop_id):
+        if current_evaluation is None:
             WorkshopService().close_workshop(workshop_id)
             return None
 
-        # Get the current evaluation or set a new one
-        current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)
-        if current_evaluation is None:
-            EvaluationService().set_current_workshop_evaluation(workshop_id)
-            current_evaluation = EvaluationService().get_current_workshop_evaluation(workshop_id)
-
         return EvaluationHelper().retrieve_next_question(current_evaluation.id, current_evaluation.technology_id)
+
+    def get_current_evaluation(self, workshop_id: str) -> Optional[EvaluationDto]:
+        current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)
+
+        if current_evaluation is None and not EvaluationService().has_potential_next_workshop_evaluation(workshop_id):
+            return None
+
+        if current_evaluation is not None:
+            if EvaluationHelper().evaluation_must_be_closed(current_evaluation):
+                EvaluationHelper.close_evaluation(current_evaluation)
+                return self.get_current_evaluation(workshop_id)
+            else:
+                return current_evaluation
+
+        EvaluationService().set_current_workshop_evaluation(workshop_id)
+        return EvaluationService().get_current_workshop_evaluation(workshop_id)

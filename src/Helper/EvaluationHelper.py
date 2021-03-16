@@ -50,7 +50,8 @@ class EvaluationHelper(Helper):
         new_evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().set_current_evaluation_question(
             evaluation_id=evaluation_id, question_id=new_question.id)
 
-        return None if new_evaluation_question is None else EvaluationQuestionHelper().map(new_evaluation_question)
+        return None if new_evaluation_question is None else EvaluationQuestionHelper().map(new_evaluation_question,
+                                                                                           technology_id)
 
     def calculate_next_difficulty(self, evaluation_id: str, technology_id: str) -> str:
         technology: TechnologyDto = TechnologyHelper().retrieve_by_index(technology_id)

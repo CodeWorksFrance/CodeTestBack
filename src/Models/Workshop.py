@@ -9,5 +9,5 @@ from src.Models.Evaluation import Evaluation
 class Workshop:
     id: str
     state: str
-    score: float
-    evaluation: typing.List['Evaluation']
+    score: typing.Optional[float]
+    evaluation: typing.List[Evaluation]

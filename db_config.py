@@ -1,7 +1,7 @@
 import os
 
 import sqlalchemy
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, close_all_sessions
 
 
 class DBConfig:
@@ -123,3 +123,7 @@ class DBConfig:
         print(id(self.load))
         session = sessionmaker(self.load)
         return session()
+
+    @staticmethod
+    def close_all_sessions():
+        close_all_sessions()

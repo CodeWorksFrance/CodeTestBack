@@ -1,11 +1,13 @@
 import strawberry
+import typing
 
 from src.Models.Question import Question
 
 
 @strawberry.type
-class CandidateAnswer:
+class EvaluationQuestion:
     id: str
     state: str
-    score: float
+    score: typing.Optional[float]
+    creation_date: str
     question: Question

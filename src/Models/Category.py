@@ -9,4 +9,4 @@ from src.Models.Technology import Technology
 class Category:
     id: str
     label: str
-    technology: typing.List['Technology']
+    technology: typing.List[Technology]

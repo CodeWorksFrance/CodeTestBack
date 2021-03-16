@@ -4,6 +4,7 @@ from src.Dto.EvaluationDto import EvaluationDto
 from src.Dto.WorkshopDto import WorkshopDto
 from src.Helper.EvaluationHelper import EvaluationHelper
 from src.Helper.Helper import Helper
+from src.Helper.ScoreHelper import ScoreHelper
 from src.Models.EvaluationQuestion import EvaluationQuestion
 from src.Models.Workshop import Workshop
 from src.Service.EvaluationService import EvaluationService
@@ -35,7 +36,9 @@ class WorkshopHelper(Helper):
 
         # Close the workshop if needed
         if current_evaluation is None:
-            WorkshopService().close_workshop(workshop_id)
+            current_workshop: WorkshopDto = self.retrieve_by_index(workshop_id)
+            score: float = ScoreHelper.get_average_score(list(map(lambda e: e.score, current_workshop.evaluation)))
+            WorkshopService().close_workshop(workshop_id, score)
             return None
 
         return EvaluationHelper().retrieve_next_question(current_evaluation.id, current_evaluation.technology_id)

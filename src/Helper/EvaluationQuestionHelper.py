@@ -1,6 +1,7 @@
 from src.Dto import EvaluationQuestionDto
 from src.Enum.EvaluationQuestionState import EvaluationQuestionState
 from src.Helper.Helper import Helper
+from src.Helper.ScoreHelper import ScoreHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Models.EvaluationQuestion import EvaluationQuestion
 from src.Service.EvaluationQuestionService import EvaluationQuestionService
@@ -24,7 +25,11 @@ class EvaluationQuestionHelper(Helper):
         if not EvaluationQuestionState.has_value(state):
             raise ValueError("Invalid state")
 
-        if EvaluationQuestionService().get(evaluation_question_id).first() is None:
+        evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().get(evaluation_question_id).first()
+        if evaluation_question is None:
             raise ValueError("Invalid EvaluationQuestion id")
 
-        EvaluationQuestionService().set_evaluation_question_state(evaluation_question_id, state)
+        score: float = 0.0 if state != EvaluationQuestionState.CORRECT.value else ScoreHelper.get_score(
+            evaluation_question.question.difficulty)
+
+        EvaluationQuestionService().set_evaluation_question_state(evaluation_question_id, state, score)

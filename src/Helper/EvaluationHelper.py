@@ -9,6 +9,7 @@ from src.Enum.EvaluationQuestionState import EvaluationQuestionState
 from src.Enum.TechnologyType import TechnologyType
 from src.Helper.EvaluationQuestionHelper import EvaluationQuestionHelper
 from src.Helper.Helper import Helper
+from src.Helper.ScoreHelper import ScoreHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Models.Evaluation import Evaluation
 from src.Models.EvaluationQuestion import EvaluationQuestion
@@ -108,7 +109,8 @@ class EvaluationHelper(Helper):
 
     @staticmethod
     def close_evaluation(evaluation: EvaluationDto):
-        EvaluationService().close_evaluation(evaluation.id)
+        score: float = ScoreHelper.get_average_score(list(map(lambda q: q.score, evaluation.evaluation_question)))
+        EvaluationService().close_evaluation(evaluation.id, score)
 
     @staticmethod
     def calculate_difficulty_up(current: str) -> str:

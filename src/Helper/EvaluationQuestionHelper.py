@@ -1,4 +1,5 @@
 from src.Dto import EvaluationQuestionDto
+from src.Enum.EvaluationQuestionState import EvaluationQuestionState
 from src.Helper.Helper import Helper
 from src.Models.EvaluationQuestion import EvaluationQuestion
 from src.Service.EvaluationQuestionService import EvaluationQuestionService
@@ -16,3 +17,12 @@ class EvaluationQuestionHelper(Helper):
                                   evaluation_question.creation_date, evaluation_question.question)
 
     # New behaviour #
+    @staticmethod
+    def save_answer(evaluation_question_id: str, state: str):
+        if not EvaluationQuestionState.has_value(state):
+            raise ValueError("Invalid state")
+
+        if EvaluationQuestionService().get(evaluation_question_id).first() is None:
+            raise ValueError("Invalid EvaluationQuestion id")
+
+        EvaluationQuestionService().set_evaluation_question_state(evaluation_question_id, state)

@@ -76,9 +76,9 @@ class EvaluationHelper(Helper):
             return self.calculate_difficulty_up(last_question_asked.question.difficulty)
 
         # Difficulty down if 2 successive errors
-        if len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT:
-            if asked_questions[-2].state == EvaluationQuestionState.INCORRECT:
-                return self.calculate_difficulty_down(last_question_asked.question.difficulty)
+        if (len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT and
+                asked_questions[-2].state == EvaluationQuestionState.INCORRECT):
+            return self.calculate_difficulty_down(last_question_asked.question.difficulty)
 
         # Same difficulty if skipped or first error
         return last_question_asked.question.difficulty

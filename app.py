@@ -5,6 +5,7 @@ import strawberry
 
 from db_config import DBConfig
 from src.Helper.CategoryHelper import CategoryHelper
+from src.Helper.EvaluationQuestionHelper import EvaluationQuestionHelper
 from src.Helper.QuestionHelper import QuestionHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Helper.WorkshopHelper import WorkshopHelper
@@ -64,6 +65,11 @@ class Mutation:
     @strawberry.mutation
     def workshop(self, technologies: typing.List[str]) -> Workshop:
         return WorkshopHelper().create_workshop(technologies)
+
+    @strawberry.mutation
+    def save_answer(self, evaluation_question_id: str, state: str) -> EvaluationQuestion:
+        EvaluationQuestionHelper().save_answer(evaluation_question_id, state)
+        return EvaluationQuestionHelper().retrieve_by_index(evaluation_question_id)
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)

@@ -18,5 +18,6 @@ class EvaluationQuestionService(Service):
     def set_current_evaluation_question(self, evaluation_id: str, question_id: str) -> EvaluationQuestionDto:
         return self.create(EvaluationQuestionDto(evaluation_id=evaluation_id, question_id=question_id))
 
-    def set_evaluation_question_state(self, evaluation_question_id: str, state: str):
-        self.update(index=evaluation_question_id, instruction={EvaluationQuestionDto.state: state})
+    def set_evaluation_question_state(self, evaluation_question_id: str, state: str, score: float):
+        self.update(index=evaluation_question_id,
+                    instruction={EvaluationQuestionDto.state: state, EvaluationQuestionDto.score: score})

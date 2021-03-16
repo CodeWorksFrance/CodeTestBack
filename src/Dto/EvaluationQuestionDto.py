@@ -15,3 +15,7 @@ class EvaluationQuestionDto(Base):
     question_id = Column(String, ForeignKey('question.id'))
     question = relationship("QuestionDto", lazy='subquery')
     creation_date = Column(String, server_default=text('now()'))
+
+    __mapper_args__ = {
+        "order_by": creation_date
+    }

@@ -9,6 +9,7 @@ from src.Enum.EvaluationQuestionState import EvaluationQuestionState
 from src.Enum.TechnologyType import TechnologyType
 from src.Helper.EvaluationQuestionHelper import EvaluationQuestionHelper
 from src.Helper.Helper import Helper
+from src.Helper.ScoreHelper import ScoreHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Models.Evaluation import Evaluation
 from src.Models.EvaluationQuestion import EvaluationQuestion
@@ -30,6 +31,9 @@ class EvaluationHelper(Helper):
                           TechnologyHelper.map(evaluation.technology))
 
     # New behaviour #
+    __MAX_ERROR: int = 3
+    __MAX_DIFFICULTY_GOOD_ANSWERS_MAX_NUMBER: int = 3
+
     def retrieve_next_question(self, evaluation_id: str, technology_id: str) -> Optional[EvaluationQuestion]:
         # Check if a question is already pending
         evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().get_current_evaluation_question(
@@ -73,16 +77,40 @@ class EvaluationHelper(Helper):
 
         # Difficulty up if correct answers
         last_question_asked: EvaluationQuestionDto = asked_questions[-1]
-        if last_question_asked.state == EvaluationQuestionState.CORRECT:
+        if last_question_asked.state == EvaluationQuestionState.CORRECT.value:
             return self.calculate_difficulty_up(last_question_asked.question.difficulty)
 
         # Difficulty down if 2 successive errors
-        if (len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT and
-                asked_questions[-2].state == EvaluationQuestionState.INCORRECT):
+        if (len(asked_questions) > 1 and last_question_asked.state == EvaluationQuestionState.INCORRECT.value and
+                asked_questions[-2].state == EvaluationQuestionState.INCORRECT.value):
             return self.calculate_difficulty_down(last_question_asked.question.difficulty)
 
         # Same difficulty if skipped or first error
         return last_question_asked.question.difficulty
+
+    def evaluation_must_be_closed(self, evaluation: EvaluationDto) -> bool:
+        if evaluation.technology.type == TechnologyType.SIMPLE_QUESTION.value:
+            return self.evaluation_must_be_closed_for_simple_question(evaluation)
+
+        return True
+
+    def evaluation_must_be_closed_for_simple_question(self, evaluation: EvaluationDto) -> bool:
+        bad_answer = list(
+            filter(lambda q: q.state == EvaluationQuestionState.INCORRECT.value, evaluation.evaluation_question))
+        max_difficulty_good_answer = list(filter(
+            lambda q: q.question.difficulty == Difficulty.D5.value and q.state == EvaluationQuestionState.CORRECT.value,
+            evaluation.evaluation_question))
+
+        if (len(bad_answer) >= self.__MAX_ERROR
+                or len(max_difficulty_good_answer) >= self.__MAX_DIFFICULTY_GOOD_ANSWERS_MAX_NUMBER):
+            return True
+
+        return False
+
+    @staticmethod
+    def close_evaluation(evaluation: EvaluationDto):
+        score: float = ScoreHelper.get_average_score(list(map(lambda q: q.score, evaluation.evaluation_question)))
+        EvaluationService().close_evaluation(evaluation.id, score)
 
     @staticmethod
     def calculate_difficulty_up(current: str) -> str:

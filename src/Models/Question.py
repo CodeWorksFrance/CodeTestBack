@@ -1,3 +1,5 @@
+import typing
+
 import strawberry
 
 
@@ -7,3 +9,4 @@ class Question:
     label: str
     answer: str
     difficulty: str
+    alternative_answers: typing.Optional[typing.List[str]]

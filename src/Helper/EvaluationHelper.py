@@ -50,6 +50,9 @@ class EvaluationHelper(Helper):
                     EvaluationQuestionService().get_closed_evaluation_questions(evaluation_id)))
         )
 
+        if new_question is None:
+            return None
+
         # Create a new evaluation question for the question
         new_evaluation_question: EvaluationQuestionDto = EvaluationQuestionService().set_current_evaluation_question(
             evaluation_id=evaluation_id, question_id=new_question.id)
@@ -62,12 +65,13 @@ class EvaluationHelper(Helper):
         if technology is None:
             return Difficulty.D1.value
 
-        if technology.type == TechnologyType.SIMPLE_QUESTION.value:
-            return self.calculate_next_difficulty_for_simple_question(evaluation_id)
+        if (technology.type == TechnologyType.SIMPLE_QUESTION.value
+                or technology.type == TechnologyType.MULTIPLE_CHOICE_QUESTIONS.value):
+            return self.calculate_next_difficulty_for_simple_and_multiple_choice_question(evaluation_id)
 
         return Difficulty.D1.value
 
-    def calculate_next_difficulty_for_simple_question(self, evaluation_id: str) -> str:
+    def calculate_next_difficulty_for_simple_and_multiple_choice_question(self, evaluation_id: str) -> str:
         asked_questions: [EvaluationQuestionDto] = EvaluationQuestionService().get_closed_evaluation_questions(
             evaluation_id)
 
@@ -89,12 +93,14 @@ class EvaluationHelper(Helper):
         return last_question_asked.question.difficulty
 
     def evaluation_must_be_closed(self, evaluation: EvaluationDto) -> bool:
-        if evaluation.technology.type == TechnologyType.SIMPLE_QUESTION.value:
-            return self.evaluation_must_be_closed_for_simple_question(evaluation)
+        technology: TechnologyDto = TechnologyHelper().retrieve_by_index(evaluation.technology_id)
+        if (technology.type == TechnologyType.SIMPLE_QUESTION.value
+                or technology.type == TechnologyType.MULTIPLE_CHOICE_QUESTIONS.value):
+            return self.evaluation_must_be_closed_for_simple_and_multiple_choice_question(evaluation)
 
         return True
 
-    def evaluation_must_be_closed_for_simple_question(self, evaluation: EvaluationDto) -> bool:
+    def evaluation_must_be_closed_for_simple_and_multiple_choice_question(self, evaluation: EvaluationDto) -> bool:
         bad_answer = list(
             filter(lambda q: q.state == EvaluationQuestionState.INCORRECT.value, evaluation.evaluation_question))
         max_difficulty_good_answer = list(filter(

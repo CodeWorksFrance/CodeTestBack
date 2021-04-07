@@ -1,15 +1,19 @@
-from sqlalchemy import Column, String, ForeignKey, text
+from sqlalchemy import Column, String, ForeignKey, text, Enum, Table
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from src.Dto import Base
 
 
 class TechnologyDto(Base):
-    __tablename__ = 'technology'
+    __table__ = Table(
+        "technology",
+        Base.metadata,
+        Column("id", UUID(as_uuid=True), primary_key=True, server_default=text('uuid_generate_v4()')),
+        Column("label", String),
+        Column("type", Enum('Simple questions', 'State questions', 'Multiple choice questions', 'Image questions')),
+        Column("image", String),
+        Column("category_id", UUID(as_uuid=True), ForeignKey('category.id'))
+    )
 
-    id = Column(String, primary_key=True, server_default=text('uuid_generate_v4()'))
-    label = Column(String)
-    type = Column(String)
-    image = Column(String)
-    category_id = Column(String, ForeignKey('category.id'))
-    question = relationship("QuestionDto", lazy='subquery')
+    question = relationship("QuestionDto", lazy="subquery", order_by="QuestionDto.difficulty")

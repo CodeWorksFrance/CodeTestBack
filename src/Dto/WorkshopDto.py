@@ -15,4 +15,4 @@ class WorkshopDto(Base):
         Column("score", Float, nullable=True)
     )
 
-    evaluation = relationship("EvaluationDto", lazy="subquery", order_by="EvaluationDto.score")
+    evaluations = relationship("EvaluationDto", lazy="subquery", order_by="EvaluationDto.score")

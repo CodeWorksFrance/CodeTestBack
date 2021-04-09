@@ -11,5 +11,5 @@ class Evaluation:
     id: str
     state: str
     score: typing.Optional[float]
-    evaluation_question: typing.List[EvaluationQuestion]
+    evaluation_questions: typing.List[EvaluationQuestion]
     technology: Technology

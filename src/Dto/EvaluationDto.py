@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Float, ForeignKey, text, Enum, Table
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 from src.Dto import Base
 from src.Enum.EvaluationState import EvaluationState
@@ -17,6 +17,6 @@ class EvaluationDto(Base):
         Column("technology_id", UUID(as_uuid=True), ForeignKey('technology.id'))
     )
 
-    evaluation_question = relationship("EvaluationQuestionDto", lazy="subquery",
-                                       order_by="EvaluationQuestionDto.creation_date")
+    evaluation_questions = relationship("EvaluationQuestionDto", lazy="subquery",
+                                        order_by="EvaluationQuestionDto.creation_date")
     technology = relationship("TechnologyDto", lazy="subquery")

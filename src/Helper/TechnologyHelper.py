@@ -14,6 +14,6 @@ class TechnologyHelper(Helper):
     @staticmethod
     def map(technology: TechnologyDto) -> Technology:
         return Technology(technology.id, technology.label, technology.type, technology.image,
-                          QuestionHelper().map_all(technology.question))
+                          QuestionHelper().map_all(technology.questions))
 
     # New behaviour #

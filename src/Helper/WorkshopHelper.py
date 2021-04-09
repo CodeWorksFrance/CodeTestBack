@@ -41,7 +41,14 @@ class WorkshopHelper(Helper):
             WorkshopService().close_workshop(workshop_id, score)
             return None
 
-        return EvaluationHelper().retrieve_next_question(current_evaluation.id, current_evaluation.technology_id)
+        next_question: EvaluationQuestion = EvaluationHelper().retrieve_next_question(current_evaluation.id,
+                                                                                      current_evaluation.technology_id)
+
+        if next_question is None:
+            EvaluationHelper.close_evaluation(current_evaluation)
+            return self.retrieve_next_question(workshop_id)
+
+        return next_question
 
     def get_current_evaluation(self, workshop_id: str) -> Optional[EvaluationDto]:
         current_evaluation: EvaluationDto = EvaluationService().get_current_workshop_evaluation(workshop_id)

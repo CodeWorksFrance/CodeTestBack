@@ -12,6 +12,7 @@ class QuestionHelper(Helper):
 
     @staticmethod
     def map(question: QuestionDto) -> Question:
-        return Question(question.id, question.label, question.answer, question.difficulty)
+        return Question(question.id, question.label, question.answer, question.difficulty,
+                        None if question.alternative_answers is None else question.alternative_answers.split("|"))
 
     # New behaviour #

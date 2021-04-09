@@ -13,4 +13,4 @@ class CategoryDto(Base):
         Column("label", String)
     )
 
-    technology = relationship("TechnologyDto", lazy="subquery", order_by="TechnologyDto.label")
+    technologies = relationship("TechnologyDto", lazy="subquery", order_by="TechnologyDto.label")

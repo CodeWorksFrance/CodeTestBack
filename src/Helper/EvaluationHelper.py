@@ -27,7 +27,7 @@ class EvaluationHelper(Helper):
     @staticmethod
     def map(evaluation: EvaluationDto) -> Evaluation:
         return Evaluation(evaluation.id, evaluation.state, evaluation.score,
-                          EvaluationQuestionHelper().map_all(evaluation.evaluation_question),
+                          EvaluationQuestionHelper().map_all(evaluation.evaluation_questions),
                           TechnologyHelper.map(evaluation.technology))
 
     # New behaviour #
@@ -102,10 +102,10 @@ class EvaluationHelper(Helper):
 
     def evaluation_must_be_closed_for_simple_and_multiple_choice_question(self, evaluation: EvaluationDto) -> bool:
         bad_answer = list(
-            filter(lambda q: q.state == EvaluationQuestionState.INCORRECT.value, evaluation.evaluation_question))
+            filter(lambda q: q.state == EvaluationQuestionState.INCORRECT.value, evaluation.evaluation_questions))
         max_difficulty_good_answer = list(filter(
             lambda q: q.question.difficulty == Difficulty.D5.value and q.state == EvaluationQuestionState.CORRECT.value,
-            evaluation.evaluation_question))
+            evaluation.evaluation_questions))
 
         if (len(bad_answer) >= self.__MAX_ERROR
                 or len(max_difficulty_good_answer) >= self.__MAX_DIFFICULTY_GOOD_ANSWERS_MAX_NUMBER):
@@ -115,7 +115,7 @@ class EvaluationHelper(Helper):
 
     @staticmethod
     def close_evaluation(evaluation: EvaluationDto):
-        score: float = ScoreHelper.get_average_score(list(map(lambda q: q.score, evaluation.evaluation_question)))
+        score: float = ScoreHelper.get_average_score(list(map(lambda q: q.score, evaluation.evaluation_questions)))
         EvaluationService().close_evaluation(evaluation.id, score)
 
     @staticmethod

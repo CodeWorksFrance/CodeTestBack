@@ -13,6 +13,6 @@ class CategoryHelper(Helper):
 
     @staticmethod
     def map(category: CategoryDto) -> Category:
-        return Category(category.id, category.label, TechnologyHelper().map_all(category.technology))
+        return Category(category.id, category.label, TechnologyHelper().map_all(category.technologies))
 
     # New behaviour #

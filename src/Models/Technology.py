@@ -11,4 +11,4 @@ class Technology:
     label: str
     type: str
     image: str
-    question: typing.List[Question]
+    questions: typing.List[Question]

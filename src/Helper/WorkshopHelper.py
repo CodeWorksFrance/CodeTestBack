@@ -20,7 +20,7 @@ class WorkshopHelper(Helper):
     @staticmethod
     def map(workshop: WorkshopDto) -> Workshop:
         return Workshop(workshop.id, workshop.state, workshop.score,
-                        EvaluationHelper().map_all(workshop.evaluation))
+                        EvaluationHelper().map_all(workshop.evaluations))
 
     # New behaviour #
     def create_workshop(self, technologies: [str]) -> Workshop:
@@ -37,7 +37,7 @@ class WorkshopHelper(Helper):
         # Close the workshop if needed
         if current_evaluation is None:
             current_workshop: WorkshopDto = self.retrieve_by_index(workshop_id)
-            score: float = ScoreHelper.get_average_score(list(map(lambda e: e.score, current_workshop.evaluation)))
+            score: float = ScoreHelper.get_average_score(list(map(lambda e: e.score, current_workshop.evaluations)))
             WorkshopService().close_workshop(workshop_id, score)
             return None
 

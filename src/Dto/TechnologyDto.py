@@ -16,4 +16,4 @@ class TechnologyDto(Base):
         Column("category_id", UUID(as_uuid=True), ForeignKey('category.id'))
     )
 
-    question = relationship("QuestionDto", lazy="subquery", order_by="QuestionDto.difficulty")
+    questions = relationship("QuestionDto", lazy="subquery", order_by="QuestionDto.difficulty")

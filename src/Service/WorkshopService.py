@@ -10,7 +10,7 @@ class WorkshopService(Service):
     def create_workshop(self, technologies: [str]) -> WorkshopDto:
         new_workshop = WorkshopDto()
         for technology_id in technologies:
-            new_workshop.evaluation.append(EvaluationDto(workshop_id=new_workshop.id, technology_id=technology_id))
+            new_workshop.evaluations.append(EvaluationDto(workshop_id=new_workshop.id, technology_id=technology_id))
 
         return self.create(new_workshop)
 

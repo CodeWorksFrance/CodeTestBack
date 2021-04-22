@@ -19,4 +19,4 @@ class WorkshopService(Service):
         return query_result is None or query_result.state == WorkshopState.FINISHED.value
 
     def close_workshop(self, index: str, score: float):
-        self.update(index=index, instruction={WorkshopDto.state: WorkshopState.FINISHED, WorkshopDto.score: score})
+        self.update(index=index, instruction={WorkshopDto.state: WorkshopState.FINISHED.value, WorkshopDto.score: score})

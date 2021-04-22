@@ -23,4 +23,4 @@ class EvaluationService(Service):
 
     def close_evaluation(self, index: str, score: float):
         self.update(index=index,
-                    instruction={EvaluationDto.state: EvaluationState.FINISHED, EvaluationDto.score: score})
+                    instruction={EvaluationDto.state: EvaluationState.FINISHED.value, EvaluationDto.score: score})

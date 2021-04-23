@@ -1,6 +1,7 @@
 from src.Dto import EvaluationQuestionDto
 from src.Enum.EvaluationQuestionState import EvaluationQuestionState
 from src.Helper.Helper import Helper
+from src.Helper.QuestionHelper import QuestionHelper
 from src.Helper.ScoreHelper import ScoreHelper
 from src.Helper.TechnologyHelper import TechnologyHelper
 from src.Models.EvaluationQuestion import EvaluationQuestion
@@ -16,7 +17,7 @@ class EvaluationQuestionHelper(Helper):
     @staticmethod
     def map(evaluation_question: EvaluationQuestionDto, technology_id: str = None) -> EvaluationQuestion:
         return EvaluationQuestion(evaluation_question.id, evaluation_question.state, evaluation_question.score,
-                                  evaluation_question.creation_date, evaluation_question.question,
+                                  evaluation_question.creation_date, QuestionHelper.map(evaluation_question.question),
                                   TechnologyHelper().retrieve_by_index(technology_id))
 
     # New behaviour #

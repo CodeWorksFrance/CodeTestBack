@@ -15,6 +15,9 @@ class ScoreHelper:
 
     @staticmethod
     def get_average_score(values: [float]) -> float:
+        if len(values) == 0:
+            return 0
+
         top_scores: [float] = values
         if len(values) > 3:
             values.sort()
